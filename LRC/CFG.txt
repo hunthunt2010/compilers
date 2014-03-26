@@ -1,0 +1,12 @@
+PROG -> BLOCK $
+BLOCK -> begin STMTLIST end
+STMTLIST -> semi STMT
+    | STMT
+STMT -> BLOCK
+    | VAR assign EXPR
+VAR -> id
+    | id lb EXPR rb
+EXPR -> EXPR plus T
+    | T
+T -> VAR
+    | lp EXPR rp
