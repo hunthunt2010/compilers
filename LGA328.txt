@@ -1,0 +1,17 @@
+How are LR(k) items different than canonical items (LR(0)).
+	- LR(k) items differ from canonical items because they hold state information to help resolve conflicts.
+	In LR(0) we had something like A->a dot B, but in LR(k) we have [A->a dot B, w] where w is a k length string that can follow A after reduction
+
+How is the table construction algorithm modiﬁed for LR(k) — a good way to think of this is how would
+you modify your own canonical script?
+	- The table construction algorithm is modified because you have to include the follows sets.  You have to make a representation of the rules that are going to follow each item in the table
+	- Add another loop to handle the w item in the set
+
+In what ways can LR(k) outperform SLR(1) and LALR(1)?
+	Outperforms LALR(1) if more lookahead is needed, LR(k) have help for k > 1
+
+What are the downsides to LR(k)?
+	- If LALR fails then that means:
+		The grammer is ambiguous, in which case LR(k) cannot help
+		No amount of lookahead suffices in which case LR(k) cannot help
+	- LR(k) isnt practical because tables are usually much larger than LR(0) tables which SLR(k) and LALR(k) are based on
