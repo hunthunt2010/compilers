@@ -1,0 +1,105 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> START
+Rule 1     START -> SEN
+Rule 2     SEN -> PVQ ADJECTIVE NOUN
+Rule 3     SEN -> PVQ NOUN
+Rule 4     PVQ -> PRONOUN VERB QUANTITY
+
+Terminals, with rules where they appear
+
+ADJECTIVE            : 2
+NOUN                 : 2 3
+PRONOUN              : 4
+QUANTITY             : 4
+VERB                 : 4
+error                : 
+
+Nonterminals, with rules where they appear
+
+PVQ                  : 2 3
+SEN                  : 1
+START                : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . START
+    (1) START -> . SEN
+    (2) SEN -> . PVQ ADJECTIVE NOUN
+    (3) SEN -> . PVQ NOUN
+    (4) PVQ -> . PRONOUN VERB QUANTITY
+
+    PRONOUN         shift and go to state 1
+
+    SEN                            shift and go to state 3
+    PVQ                            shift and go to state 2
+    START                          shift and go to state 4
+
+state 1
+
+    (4) PVQ -> PRONOUN . VERB QUANTITY
+
+    VERB            shift and go to state 5
+
+
+state 2
+
+    (2) SEN -> PVQ . ADJECTIVE NOUN
+    (3) SEN -> PVQ . NOUN
+
+    ADJECTIVE       shift and go to state 7
+    NOUN            shift and go to state 6
+
+
+state 3
+
+    (1) START -> SEN .
+
+    $end            reduce using rule 1 (START -> SEN .)
+
+
+state 4
+
+    (0) S' -> START .
+
+
+
+state 5
+
+    (4) PVQ -> PRONOUN VERB . QUANTITY
+
+    QUANTITY        shift and go to state 8
+
+
+state 6
+
+    (3) SEN -> PVQ NOUN .
+
+    $end            reduce using rule 3 (SEN -> PVQ NOUN .)
+
+
+state 7
+
+    (2) SEN -> PVQ ADJECTIVE . NOUN
+
+    NOUN            shift and go to state 9
+
+
+state 8
+
+    (4) PVQ -> PRONOUN VERB QUANTITY .
+
+    ADJECTIVE       reduce using rule 4 (PVQ -> PRONOUN VERB QUANTITY .)
+    NOUN            reduce using rule 4 (PVQ -> PRONOUN VERB QUANTITY .)
+
+
+state 9
+
+    (2) SEN -> PVQ ADJECTIVE NOUN .
+
+    $end            reduce using rule 2 (SEN -> PVQ ADJECTIVE NOUN .)
+
