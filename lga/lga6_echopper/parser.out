@@ -1,0 +1,425 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> statements
+Rule 1     statements -> statements SEMI statement
+Rule 2     statements -> statement
+Rule 3     statement -> ID ASSIGN e
+Rule 4     statement -> IF LPAREN e RPAREN statement ELSE statement FI
+Rule 5     statement -> IF LPAREN e RPAREN statement FI
+Rule 6     statement -> WHILE LPAREN e RPAREN DO statement OD
+Rule 7     statement -> BEGIN statements END
+Rule 8     e -> e PLUS t
+Rule 9     e -> t
+Rule 10    t -> ID
+Rule 11    t -> NUM
+
+Terminals, with rules where they appear
+
+ASSIGN               : 3
+BEGIN                : 7
+DO                   : 6
+ELSE                 : 4
+END                  : 7
+FI                   : 4 5
+ID                   : 3 10
+IF                   : 4 5
+LPAREN               : 4 5 6
+NUM                  : 11
+OD                   : 6
+PLUS                 : 8
+RPAREN               : 4 5 6
+SEMI                 : 1
+WHILE                : 6
+error                : 
+
+Nonterminals, with rules where they appear
+
+e                    : 3 4 5 6 8
+statement            : 1 2 4 4 5 6
+statements           : 1 7 0
+t                    : 8 9
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . statements
+    (1) statements -> . statements SEMI statement
+    (2) statements -> . statement
+    (3) statement -> . ID ASSIGN e
+    (4) statement -> . IF LPAREN e RPAREN statement ELSE statement FI
+    (5) statement -> . IF LPAREN e RPAREN statement FI
+    (6) statement -> . WHILE LPAREN e RPAREN DO statement OD
+    (7) statement -> . BEGIN statements END
+
+    ID              shift and go to state 2
+    IF              shift and go to state 6
+    WHILE           shift and go to state 3
+    BEGIN           shift and go to state 1
+
+    statements                     shift and go to state 5
+    statement                      shift and go to state 4
+
+state 1
+
+    (7) statement -> BEGIN . statements END
+    (1) statements -> . statements SEMI statement
+    (2) statements -> . statement
+    (3) statement -> . ID ASSIGN e
+    (4) statement -> . IF LPAREN e RPAREN statement ELSE statement FI
+    (5) statement -> . IF LPAREN e RPAREN statement FI
+    (6) statement -> . WHILE LPAREN e RPAREN DO statement OD
+    (7) statement -> . BEGIN statements END
+
+    ID              shift and go to state 2
+    IF              shift and go to state 6
+    WHILE           shift and go to state 3
+    BEGIN           shift and go to state 1
+
+    statements                     shift and go to state 7
+    statement                      shift and go to state 4
+
+state 2
+
+    (3) statement -> ID . ASSIGN e
+
+    ASSIGN          shift and go to state 8
+
+
+state 3
+
+    (6) statement -> WHILE . LPAREN e RPAREN DO statement OD
+
+    LPAREN          shift and go to state 9
+
+
+state 4
+
+    (2) statements -> statement .
+
+    END             reduce using rule 2 (statements -> statement .)
+    SEMI            reduce using rule 2 (statements -> statement .)
+    $end            reduce using rule 2 (statements -> statement .)
+
+
+state 5
+
+    (0) S' -> statements .
+    (1) statements -> statements . SEMI statement
+
+    SEMI            shift and go to state 10
+
+
+state 6
+
+    (4) statement -> IF . LPAREN e RPAREN statement ELSE statement FI
+    (5) statement -> IF . LPAREN e RPAREN statement FI
+
+    LPAREN          shift and go to state 11
+
+
+state 7
+
+    (7) statement -> BEGIN statements . END
+    (1) statements -> statements . SEMI statement
+
+    END             shift and go to state 12
+    SEMI            shift and go to state 10
+
+
+state 8
+
+    (3) statement -> ID ASSIGN . e
+    (8) e -> . e PLUS t
+    (9) e -> . t
+    (10) t -> . ID
+    (11) t -> . NUM
+
+    ID              shift and go to state 16
+    NUM             shift and go to state 14
+
+    e                              shift and go to state 13
+    t                              shift and go to state 15
+
+state 9
+
+    (6) statement -> WHILE LPAREN . e RPAREN DO statement OD
+    (8) e -> . e PLUS t
+    (9) e -> . t
+    (10) t -> . ID
+    (11) t -> . NUM
+
+    ID              shift and go to state 16
+    NUM             shift and go to state 14
+
+    e                              shift and go to state 17
+    t                              shift and go to state 15
+
+state 10
+
+    (1) statements -> statements SEMI . statement
+    (3) statement -> . ID ASSIGN e
+    (4) statement -> . IF LPAREN e RPAREN statement ELSE statement FI
+    (5) statement -> . IF LPAREN e RPAREN statement FI
+    (6) statement -> . WHILE LPAREN e RPAREN DO statement OD
+    (7) statement -> . BEGIN statements END
+
+    ID              shift and go to state 2
+    IF              shift and go to state 6
+    WHILE           shift and go to state 3
+    BEGIN           shift and go to state 1
+
+    statement                      shift and go to state 18
+
+state 11
+
+    (4) statement -> IF LPAREN . e RPAREN statement ELSE statement FI
+    (5) statement -> IF LPAREN . e RPAREN statement FI
+    (8) e -> . e PLUS t
+    (9) e -> . t
+    (10) t -> . ID
+    (11) t -> . NUM
+
+    ID              shift and go to state 16
+    NUM             shift and go to state 14
+
+    e                              shift and go to state 19
+    t                              shift and go to state 15
+
+state 12
+
+    (7) statement -> BEGIN statements END .
+
+    SEMI            reduce using rule 7 (statement -> BEGIN statements END .)
+    $end            reduce using rule 7 (statement -> BEGIN statements END .)
+    END             reduce using rule 7 (statement -> BEGIN statements END .)
+    ELSE            reduce using rule 7 (statement -> BEGIN statements END .)
+    FI              reduce using rule 7 (statement -> BEGIN statements END .)
+    OD              reduce using rule 7 (statement -> BEGIN statements END .)
+
+
+state 13
+
+    (3) statement -> ID ASSIGN e .
+    (8) e -> e . PLUS t
+
+    SEMI            reduce using rule 3 (statement -> ID ASSIGN e .)
+    $end            reduce using rule 3 (statement -> ID ASSIGN e .)
+    END             reduce using rule 3 (statement -> ID ASSIGN e .)
+    ELSE            reduce using rule 3 (statement -> ID ASSIGN e .)
+    FI              reduce using rule 3 (statement -> ID ASSIGN e .)
+    OD              reduce using rule 3 (statement -> ID ASSIGN e .)
+    PLUS            shift and go to state 20
+
+
+state 14
+
+    (11) t -> NUM .
+
+    PLUS            reduce using rule 11 (t -> NUM .)
+    SEMI            reduce using rule 11 (t -> NUM .)
+    $end            reduce using rule 11 (t -> NUM .)
+    END             reduce using rule 11 (t -> NUM .)
+    ELSE            reduce using rule 11 (t -> NUM .)
+    FI              reduce using rule 11 (t -> NUM .)
+    OD              reduce using rule 11 (t -> NUM .)
+    RPAREN          reduce using rule 11 (t -> NUM .)
+
+
+state 15
+
+    (9) e -> t .
+
+    RPAREN          reduce using rule 9 (e -> t .)
+    PLUS            reduce using rule 9 (e -> t .)
+    SEMI            reduce using rule 9 (e -> t .)
+    $end            reduce using rule 9 (e -> t .)
+    END             reduce using rule 9 (e -> t .)
+    ELSE            reduce using rule 9 (e -> t .)
+    FI              reduce using rule 9 (e -> t .)
+    OD              reduce using rule 9 (e -> t .)
+
+
+state 16
+
+    (10) t -> ID .
+
+    PLUS            reduce using rule 10 (t -> ID .)
+    SEMI            reduce using rule 10 (t -> ID .)
+    $end            reduce using rule 10 (t -> ID .)
+    END             reduce using rule 10 (t -> ID .)
+    ELSE            reduce using rule 10 (t -> ID .)
+    FI              reduce using rule 10 (t -> ID .)
+    OD              reduce using rule 10 (t -> ID .)
+    RPAREN          reduce using rule 10 (t -> ID .)
+
+
+state 17
+
+    (6) statement -> WHILE LPAREN e . RPAREN DO statement OD
+    (8) e -> e . PLUS t
+
+    RPAREN          shift and go to state 21
+    PLUS            shift and go to state 20
+
+
+state 18
+
+    (1) statements -> statements SEMI statement .
+
+    END             reduce using rule 1 (statements -> statements SEMI statement .)
+    SEMI            reduce using rule 1 (statements -> statements SEMI statement .)
+    $end            reduce using rule 1 (statements -> statements SEMI statement .)
+
+
+state 19
+
+    (4) statement -> IF LPAREN e . RPAREN statement ELSE statement FI
+    (5) statement -> IF LPAREN e . RPAREN statement FI
+    (8) e -> e . PLUS t
+
+    RPAREN          shift and go to state 22
+    PLUS            shift and go to state 20
+
+
+state 20
+
+    (8) e -> e PLUS . t
+    (10) t -> . ID
+    (11) t -> . NUM
+
+    ID              shift and go to state 16
+    NUM             shift and go to state 14
+
+    t                              shift and go to state 23
+
+state 21
+
+    (6) statement -> WHILE LPAREN e RPAREN . DO statement OD
+
+    DO              shift and go to state 24
+
+
+state 22
+
+    (4) statement -> IF LPAREN e RPAREN . statement ELSE statement FI
+    (5) statement -> IF LPAREN e RPAREN . statement FI
+    (3) statement -> . ID ASSIGN e
+    (4) statement -> . IF LPAREN e RPAREN statement ELSE statement FI
+    (5) statement -> . IF LPAREN e RPAREN statement FI
+    (6) statement -> . WHILE LPAREN e RPAREN DO statement OD
+    (7) statement -> . BEGIN statements END
+
+    ID              shift and go to state 2
+    IF              shift and go to state 6
+    WHILE           shift and go to state 3
+    BEGIN           shift and go to state 1
+
+    statement                      shift and go to state 25
+
+state 23
+
+    (8) e -> e PLUS t .
+
+    RPAREN          reduce using rule 8 (e -> e PLUS t .)
+    PLUS            reduce using rule 8 (e -> e PLUS t .)
+    SEMI            reduce using rule 8 (e -> e PLUS t .)
+    $end            reduce using rule 8 (e -> e PLUS t .)
+    END             reduce using rule 8 (e -> e PLUS t .)
+    ELSE            reduce using rule 8 (e -> e PLUS t .)
+    FI              reduce using rule 8 (e -> e PLUS t .)
+    OD              reduce using rule 8 (e -> e PLUS t .)
+
+
+state 24
+
+    (6) statement -> WHILE LPAREN e RPAREN DO . statement OD
+    (3) statement -> . ID ASSIGN e
+    (4) statement -> . IF LPAREN e RPAREN statement ELSE statement FI
+    (5) statement -> . IF LPAREN e RPAREN statement FI
+    (6) statement -> . WHILE LPAREN e RPAREN DO statement OD
+    (7) statement -> . BEGIN statements END
+
+    ID              shift and go to state 2
+    IF              shift and go to state 6
+    WHILE           shift and go to state 3
+    BEGIN           shift and go to state 1
+
+    statement                      shift and go to state 26
+
+state 25
+
+    (4) statement -> IF LPAREN e RPAREN statement . ELSE statement FI
+    (5) statement -> IF LPAREN e RPAREN statement . FI
+
+    ELSE            shift and go to state 27
+    FI              shift and go to state 28
+
+
+state 26
+
+    (6) statement -> WHILE LPAREN e RPAREN DO statement . OD
+
+    OD              shift and go to state 29
+
+
+state 27
+
+    (4) statement -> IF LPAREN e RPAREN statement ELSE . statement FI
+    (3) statement -> . ID ASSIGN e
+    (4) statement -> . IF LPAREN e RPAREN statement ELSE statement FI
+    (5) statement -> . IF LPAREN e RPAREN statement FI
+    (6) statement -> . WHILE LPAREN e RPAREN DO statement OD
+    (7) statement -> . BEGIN statements END
+
+    ID              shift and go to state 2
+    IF              shift and go to state 6
+    WHILE           shift and go to state 3
+    BEGIN           shift and go to state 1
+
+    statement                      shift and go to state 30
+
+state 28
+
+    (5) statement -> IF LPAREN e RPAREN statement FI .
+
+    SEMI            reduce using rule 5 (statement -> IF LPAREN e RPAREN statement FI .)
+    $end            reduce using rule 5 (statement -> IF LPAREN e RPAREN statement FI .)
+    END             reduce using rule 5 (statement -> IF LPAREN e RPAREN statement FI .)
+    ELSE            reduce using rule 5 (statement -> IF LPAREN e RPAREN statement FI .)
+    FI              reduce using rule 5 (statement -> IF LPAREN e RPAREN statement FI .)
+    OD              reduce using rule 5 (statement -> IF LPAREN e RPAREN statement FI .)
+
+
+state 29
+
+    (6) statement -> WHILE LPAREN e RPAREN DO statement OD .
+
+    SEMI            reduce using rule 6 (statement -> WHILE LPAREN e RPAREN DO statement OD .)
+    $end            reduce using rule 6 (statement -> WHILE LPAREN e RPAREN DO statement OD .)
+    END             reduce using rule 6 (statement -> WHILE LPAREN e RPAREN DO statement OD .)
+    ELSE            reduce using rule 6 (statement -> WHILE LPAREN e RPAREN DO statement OD .)
+    FI              reduce using rule 6 (statement -> WHILE LPAREN e RPAREN DO statement OD .)
+    OD              reduce using rule 6 (statement -> WHILE LPAREN e RPAREN DO statement OD .)
+
+
+state 30
+
+    (4) statement -> IF LPAREN e RPAREN statement ELSE statement . FI
+
+    FI              shift and go to state 31
+
+
+state 31
+
+    (4) statement -> IF LPAREN e RPAREN statement ELSE statement FI .
+
+    SEMI            reduce using rule 4 (statement -> IF LPAREN e RPAREN statement ELSE statement FI .)
+    $end            reduce using rule 4 (statement -> IF LPAREN e RPAREN statement ELSE statement FI .)
+    END             reduce using rule 4 (statement -> IF LPAREN e RPAREN statement ELSE statement FI .)
+    ELSE            reduce using rule 4 (statement -> IF LPAREN e RPAREN statement ELSE statement FI .)
+    FI              reduce using rule 4 (statement -> IF LPAREN e RPAREN statement ELSE statement FI .)
+    OD              reduce using rule 4 (statement -> IF LPAREN e RPAREN statement ELSE statement FI .)
+
