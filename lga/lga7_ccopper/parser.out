@@ -1,0 +1,496 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> START
+Rule 1     START -> STMTS
+Rule 2     STMTS -> TYPE id sc
+Rule 3     STMTS -> TYPE id assign EXPR sc
+Rule 4     STMTS -> id assign EXPR sc
+Rule 5     STMTS -> if lp EXPR rp lb STMTS rb
+Rule 6     STMTS -> if lp EXPR rp lb STMTS rb else lb STMTS rb
+Rule 7     STMTS -> return EXPR sc
+Rule 8     STMTS -> STMTS STMTS
+Rule 9     EXPR -> EXPR OP EXPR
+Rule 10    EXPR -> id
+Rule 11    EXPR -> num
+Rule 12    EXPR -> lp EXPR rp
+
+Terminals, with rules where they appear
+
+OP                   : 9
+TYPE                 : 2 3
+assign               : 3 4
+else                 : 6
+error                : 
+id                   : 2 3 4 10
+if                   : 5 6
+lb                   : 5 6 6
+lp                   : 5 6 12
+num                  : 11
+rb                   : 5 6 6
+return               : 7
+rp                   : 5 6 12
+sc                   : 2 3 4 7
+
+Nonterminals, with rules where they appear
+
+EXPR                 : 3 4 5 6 7 9 9 12
+START                : 0
+STMTS                : 1 5 6 6 8 8
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . START
+    (1) START -> . STMTS
+    (2) STMTS -> . TYPE id sc
+    (3) STMTS -> . TYPE id assign EXPR sc
+    (4) STMTS -> . id assign EXPR sc
+    (5) STMTS -> . if lp EXPR rp lb STMTS rb
+    (6) STMTS -> . if lp EXPR rp lb STMTS rb else lb STMTS rb
+    (7) STMTS -> . return EXPR sc
+    (8) STMTS -> . STMTS STMTS
+
+    TYPE            shift and go to state 5
+    id              shift and go to state 4
+    if              shift and go to state 6
+    return          shift and go to state 3
+
+    START                          shift and go to state 2
+    STMTS                          shift and go to state 1
+
+state 1
+
+    (1) START -> STMTS .
+    (8) STMTS -> STMTS . STMTS
+    (2) STMTS -> . TYPE id sc
+    (3) STMTS -> . TYPE id assign EXPR sc
+    (4) STMTS -> . id assign EXPR sc
+    (5) STMTS -> . if lp EXPR rp lb STMTS rb
+    (6) STMTS -> . if lp EXPR rp lb STMTS rb else lb STMTS rb
+    (7) STMTS -> . return EXPR sc
+    (8) STMTS -> . STMTS STMTS
+
+    $end            reduce using rule 1 (START -> STMTS .)
+    TYPE            shift and go to state 5
+    id              shift and go to state 4
+    if              shift and go to state 6
+    return          shift and go to state 3
+
+    STMTS                          shift and go to state 7
+
+state 2
+
+    (0) S' -> START .
+
+
+
+state 3
+
+    (7) STMTS -> return . EXPR sc
+    (9) EXPR -> . EXPR OP EXPR
+    (10) EXPR -> . id
+    (11) EXPR -> . num
+    (12) EXPR -> . lp EXPR rp
+
+    id              shift and go to state 11
+    num             shift and go to state 8
+    lp              shift and go to state 9
+
+    EXPR                           shift and go to state 10
+
+state 4
+
+    (4) STMTS -> id . assign EXPR sc
+
+    assign          shift and go to state 12
+
+
+state 5
+
+    (2) STMTS -> TYPE . id sc
+    (3) STMTS -> TYPE . id assign EXPR sc
+
+    id              shift and go to state 13
+
+
+state 6
+
+    (5) STMTS -> if . lp EXPR rp lb STMTS rb
+    (6) STMTS -> if . lp EXPR rp lb STMTS rb else lb STMTS rb
+
+    lp              shift and go to state 14
+
+
+state 7
+
+    (8) STMTS -> STMTS STMTS .
+    (8) STMTS -> STMTS . STMTS
+    (2) STMTS -> . TYPE id sc
+    (3) STMTS -> . TYPE id assign EXPR sc
+    (4) STMTS -> . id assign EXPR sc
+    (5) STMTS -> . if lp EXPR rp lb STMTS rb
+    (6) STMTS -> . if lp EXPR rp lb STMTS rb else lb STMTS rb
+    (7) STMTS -> . return EXPR sc
+    (8) STMTS -> . STMTS STMTS
+
+  ! shift/reduce conflict for TYPE resolved as shift
+  ! shift/reduce conflict for id resolved as shift
+  ! shift/reduce conflict for if resolved as shift
+  ! shift/reduce conflict for return resolved as shift
+    $end            reduce using rule 8 (STMTS -> STMTS STMTS .)
+    rb              reduce using rule 8 (STMTS -> STMTS STMTS .)
+    TYPE            shift and go to state 5
+    id              shift and go to state 4
+    if              shift and go to state 6
+    return          shift and go to state 3
+
+  ! TYPE            [ reduce using rule 8 (STMTS -> STMTS STMTS .) ]
+  ! id              [ reduce using rule 8 (STMTS -> STMTS STMTS .) ]
+  ! if              [ reduce using rule 8 (STMTS -> STMTS STMTS .) ]
+  ! return          [ reduce using rule 8 (STMTS -> STMTS STMTS .) ]
+
+    STMTS                          shift and go to state 7
+
+state 8
+
+    (11) EXPR -> num .
+
+    OP              reduce using rule 11 (EXPR -> num .)
+    sc              reduce using rule 11 (EXPR -> num .)
+    rp              reduce using rule 11 (EXPR -> num .)
+
+
+state 9
+
+    (12) EXPR -> lp . EXPR rp
+    (9) EXPR -> . EXPR OP EXPR
+    (10) EXPR -> . id
+    (11) EXPR -> . num
+    (12) EXPR -> . lp EXPR rp
+
+    id              shift and go to state 11
+    num             shift and go to state 8
+    lp              shift and go to state 9
+
+    EXPR                           shift and go to state 15
+
+state 10
+
+    (7) STMTS -> return EXPR . sc
+    (9) EXPR -> EXPR . OP EXPR
+
+    sc              shift and go to state 16
+    OP              shift and go to state 17
+
+
+state 11
+
+    (10) EXPR -> id .
+
+    OP              reduce using rule 10 (EXPR -> id .)
+    sc              reduce using rule 10 (EXPR -> id .)
+    rp              reduce using rule 10 (EXPR -> id .)
+
+
+state 12
+
+    (4) STMTS -> id assign . EXPR sc
+    (9) EXPR -> . EXPR OP EXPR
+    (10) EXPR -> . id
+    (11) EXPR -> . num
+    (12) EXPR -> . lp EXPR rp
+
+    id              shift and go to state 11
+    num             shift and go to state 8
+    lp              shift and go to state 9
+
+    EXPR                           shift and go to state 18
+
+state 13
+
+    (2) STMTS -> TYPE id . sc
+    (3) STMTS -> TYPE id . assign EXPR sc
+
+    sc              shift and go to state 19
+    assign          shift and go to state 20
+
+
+state 14
+
+    (5) STMTS -> if lp . EXPR rp lb STMTS rb
+    (6) STMTS -> if lp . EXPR rp lb STMTS rb else lb STMTS rb
+    (9) EXPR -> . EXPR OP EXPR
+    (10) EXPR -> . id
+    (11) EXPR -> . num
+    (12) EXPR -> . lp EXPR rp
+
+    id              shift and go to state 11
+    num             shift and go to state 8
+    lp              shift and go to state 9
+
+    EXPR                           shift and go to state 21
+
+state 15
+
+    (12) EXPR -> lp EXPR . rp
+    (9) EXPR -> EXPR . OP EXPR
+
+    rp              shift and go to state 22
+    OP              shift and go to state 17
+
+
+state 16
+
+    (7) STMTS -> return EXPR sc .
+
+    TYPE            reduce using rule 7 (STMTS -> return EXPR sc .)
+    id              reduce using rule 7 (STMTS -> return EXPR sc .)
+    if              reduce using rule 7 (STMTS -> return EXPR sc .)
+    return          reduce using rule 7 (STMTS -> return EXPR sc .)
+    $end            reduce using rule 7 (STMTS -> return EXPR sc .)
+    rb              reduce using rule 7 (STMTS -> return EXPR sc .)
+
+
+state 17
+
+    (9) EXPR -> EXPR OP . EXPR
+    (9) EXPR -> . EXPR OP EXPR
+    (10) EXPR -> . id
+    (11) EXPR -> . num
+    (12) EXPR -> . lp EXPR rp
+
+    id              shift and go to state 11
+    num             shift and go to state 8
+    lp              shift and go to state 9
+
+    EXPR                           shift and go to state 23
+
+state 18
+
+    (4) STMTS -> id assign EXPR . sc
+    (9) EXPR -> EXPR . OP EXPR
+
+    sc              shift and go to state 24
+    OP              shift and go to state 17
+
+
+state 19
+
+    (2) STMTS -> TYPE id sc .
+
+    TYPE            reduce using rule 2 (STMTS -> TYPE id sc .)
+    id              reduce using rule 2 (STMTS -> TYPE id sc .)
+    if              reduce using rule 2 (STMTS -> TYPE id sc .)
+    return          reduce using rule 2 (STMTS -> TYPE id sc .)
+    $end            reduce using rule 2 (STMTS -> TYPE id sc .)
+    rb              reduce using rule 2 (STMTS -> TYPE id sc .)
+
+
+state 20
+
+    (3) STMTS -> TYPE id assign . EXPR sc
+    (9) EXPR -> . EXPR OP EXPR
+    (10) EXPR -> . id
+    (11) EXPR -> . num
+    (12) EXPR -> . lp EXPR rp
+
+    id              shift and go to state 11
+    num             shift and go to state 8
+    lp              shift and go to state 9
+
+    EXPR                           shift and go to state 25
+
+state 21
+
+    (5) STMTS -> if lp EXPR . rp lb STMTS rb
+    (6) STMTS -> if lp EXPR . rp lb STMTS rb else lb STMTS rb
+    (9) EXPR -> EXPR . OP EXPR
+
+    rp              shift and go to state 26
+    OP              shift and go to state 17
+
+
+state 22
+
+    (12) EXPR -> lp EXPR rp .
+
+    OP              reduce using rule 12 (EXPR -> lp EXPR rp .)
+    sc              reduce using rule 12 (EXPR -> lp EXPR rp .)
+    rp              reduce using rule 12 (EXPR -> lp EXPR rp .)
+
+
+state 23
+
+    (9) EXPR -> EXPR OP EXPR .
+    (9) EXPR -> EXPR . OP EXPR
+
+  ! shift/reduce conflict for OP resolved as shift
+    sc              reduce using rule 9 (EXPR -> EXPR OP EXPR .)
+    rp              reduce using rule 9 (EXPR -> EXPR OP EXPR .)
+    OP              shift and go to state 17
+
+  ! OP              [ reduce using rule 9 (EXPR -> EXPR OP EXPR .) ]
+
+
+state 24
+
+    (4) STMTS -> id assign EXPR sc .
+
+    TYPE            reduce using rule 4 (STMTS -> id assign EXPR sc .)
+    id              reduce using rule 4 (STMTS -> id assign EXPR sc .)
+    if              reduce using rule 4 (STMTS -> id assign EXPR sc .)
+    return          reduce using rule 4 (STMTS -> id assign EXPR sc .)
+    $end            reduce using rule 4 (STMTS -> id assign EXPR sc .)
+    rb              reduce using rule 4 (STMTS -> id assign EXPR sc .)
+
+
+state 25
+
+    (3) STMTS -> TYPE id assign EXPR . sc
+    (9) EXPR -> EXPR . OP EXPR
+
+    sc              shift and go to state 27
+    OP              shift and go to state 17
+
+
+state 26
+
+    (5) STMTS -> if lp EXPR rp . lb STMTS rb
+    (6) STMTS -> if lp EXPR rp . lb STMTS rb else lb STMTS rb
+
+    lb              shift and go to state 28
+
+
+state 27
+
+    (3) STMTS -> TYPE id assign EXPR sc .
+
+    TYPE            reduce using rule 3 (STMTS -> TYPE id assign EXPR sc .)
+    id              reduce using rule 3 (STMTS -> TYPE id assign EXPR sc .)
+    if              reduce using rule 3 (STMTS -> TYPE id assign EXPR sc .)
+    return          reduce using rule 3 (STMTS -> TYPE id assign EXPR sc .)
+    $end            reduce using rule 3 (STMTS -> TYPE id assign EXPR sc .)
+    rb              reduce using rule 3 (STMTS -> TYPE id assign EXPR sc .)
+
+
+state 28
+
+    (5) STMTS -> if lp EXPR rp lb . STMTS rb
+    (6) STMTS -> if lp EXPR rp lb . STMTS rb else lb STMTS rb
+    (2) STMTS -> . TYPE id sc
+    (3) STMTS -> . TYPE id assign EXPR sc
+    (4) STMTS -> . id assign EXPR sc
+    (5) STMTS -> . if lp EXPR rp lb STMTS rb
+    (6) STMTS -> . if lp EXPR rp lb STMTS rb else lb STMTS rb
+    (7) STMTS -> . return EXPR sc
+    (8) STMTS -> . STMTS STMTS
+
+    TYPE            shift and go to state 5
+    id              shift and go to state 4
+    if              shift and go to state 6
+    return          shift and go to state 3
+
+    STMTS                          shift and go to state 29
+
+state 29
+
+    (5) STMTS -> if lp EXPR rp lb STMTS . rb
+    (6) STMTS -> if lp EXPR rp lb STMTS . rb else lb STMTS rb
+    (8) STMTS -> STMTS . STMTS
+    (2) STMTS -> . TYPE id sc
+    (3) STMTS -> . TYPE id assign EXPR sc
+    (4) STMTS -> . id assign EXPR sc
+    (5) STMTS -> . if lp EXPR rp lb STMTS rb
+    (6) STMTS -> . if lp EXPR rp lb STMTS rb else lb STMTS rb
+    (7) STMTS -> . return EXPR sc
+    (8) STMTS -> . STMTS STMTS
+
+    rb              shift and go to state 30
+    TYPE            shift and go to state 5
+    id              shift and go to state 4
+    if              shift and go to state 6
+    return          shift and go to state 3
+
+    STMTS                          shift and go to state 7
+
+state 30
+
+    (5) STMTS -> if lp EXPR rp lb STMTS rb .
+    (6) STMTS -> if lp EXPR rp lb STMTS rb . else lb STMTS rb
+
+    TYPE            reduce using rule 5 (STMTS -> if lp EXPR rp lb STMTS rb .)
+    id              reduce using rule 5 (STMTS -> if lp EXPR rp lb STMTS rb .)
+    if              reduce using rule 5 (STMTS -> if lp EXPR rp lb STMTS rb .)
+    return          reduce using rule 5 (STMTS -> if lp EXPR rp lb STMTS rb .)
+    $end            reduce using rule 5 (STMTS -> if lp EXPR rp lb STMTS rb .)
+    rb              reduce using rule 5 (STMTS -> if lp EXPR rp lb STMTS rb .)
+    else            shift and go to state 31
+
+
+state 31
+
+    (6) STMTS -> if lp EXPR rp lb STMTS rb else . lb STMTS rb
+
+    lb              shift and go to state 32
+
+
+state 32
+
+    (6) STMTS -> if lp EXPR rp lb STMTS rb else lb . STMTS rb
+    (2) STMTS -> . TYPE id sc
+    (3) STMTS -> . TYPE id assign EXPR sc
+    (4) STMTS -> . id assign EXPR sc
+    (5) STMTS -> . if lp EXPR rp lb STMTS rb
+    (6) STMTS -> . if lp EXPR rp lb STMTS rb else lb STMTS rb
+    (7) STMTS -> . return EXPR sc
+    (8) STMTS -> . STMTS STMTS
+
+    TYPE            shift and go to state 5
+    id              shift and go to state 4
+    if              shift and go to state 6
+    return          shift and go to state 3
+
+    STMTS                          shift and go to state 33
+
+state 33
+
+    (6) STMTS -> if lp EXPR rp lb STMTS rb else lb STMTS . rb
+    (8) STMTS -> STMTS . STMTS
+    (2) STMTS -> . TYPE id sc
+    (3) STMTS -> . TYPE id assign EXPR sc
+    (4) STMTS -> . id assign EXPR sc
+    (5) STMTS -> . if lp EXPR rp lb STMTS rb
+    (6) STMTS -> . if lp EXPR rp lb STMTS rb else lb STMTS rb
+    (7) STMTS -> . return EXPR sc
+    (8) STMTS -> . STMTS STMTS
+
+    rb              shift and go to state 34
+    TYPE            shift and go to state 5
+    id              shift and go to state 4
+    if              shift and go to state 6
+    return          shift and go to state 3
+
+    STMTS                          shift and go to state 7
+
+state 34
+
+    (6) STMTS -> if lp EXPR rp lb STMTS rb else lb STMTS rb .
+
+    TYPE            reduce using rule 6 (STMTS -> if lp EXPR rp lb STMTS rb else lb STMTS rb .)
+    id              reduce using rule 6 (STMTS -> if lp EXPR rp lb STMTS rb else lb STMTS rb .)
+    if              reduce using rule 6 (STMTS -> if lp EXPR rp lb STMTS rb else lb STMTS rb .)
+    return          reduce using rule 6 (STMTS -> if lp EXPR rp lb STMTS rb else lb STMTS rb .)
+    $end            reduce using rule 6 (STMTS -> if lp EXPR rp lb STMTS rb else lb STMTS rb .)
+    rb              reduce using rule 6 (STMTS -> if lp EXPR rp lb STMTS rb else lb STMTS rb .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for TYPE in state 7 resolved as shift
+WARNING: shift/reduce conflict for id in state 7 resolved as shift
+WARNING: shift/reduce conflict for if in state 7 resolved as shift
+WARNING: shift/reduce conflict for return in state 7 resolved as shift
+WARNING: shift/reduce conflict for OP in state 23 resolved as shift
