@@ -46,7 +46,7 @@ t_lcurbrace = r'\{'
 t_rcurbrace = r'\}'
 t_constant_int = r'0|([1-9]+[0-9]*)'
 
-t_ignore = r' '
+t_ignore = ' \n\t'
 
 def t_identifier(t):
     r'[a-zA-Z_]+[a-zA-Z0-9_]*'
