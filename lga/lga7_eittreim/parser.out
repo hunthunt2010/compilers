@@ -1,0 +1,730 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> START
+Rule 1     START -> STATEMENTS
+Rule 2     STATEMENTS -> STATEMENT semi STATEMENTS
+Rule 3     STATEMENTS -> STATEMENT semi
+Rule 4     STATEMENTS -> IF
+Rule 5     STATEMENT -> EXPRESSION
+Rule 6     STATEMENT -> DECL
+Rule 7     STATEMENT -> ASSIGNMENT
+Rule 8     STATEMENT -> RETURN
+Rule 9     RETURN -> return EXPRESSION
+Rule 10    DECL -> TYPE VARIABLE assignment EXPRESSION
+Rule 11    ASSIGNMENT -> VARIABLE assignment EXPRESSION
+Rule 12    TYPE -> type_int
+Rule 13    VARIABLE -> identifier
+Rule 14    EXPRESSION -> CONSTANT
+Rule 15    EXPRESSION -> VARIABLE
+Rule 16    EXPRESSION -> OPERATION
+Rule 17    OPERATION -> OPERATION_BINARY
+Rule 18    OPERATION_BINARY -> EXPRESSION lshift EXPRESSION
+Rule 19    OPERATION_BINARY -> EXPRESSION greater_than EXPRESSION
+Rule 20    CONSTANT -> constant_int
+Rule 21    BOOLEAN -> EXPRESSION
+Rule 22    CODEBLOCK -> lcurbrace STATEMENTS rcurbrace
+Rule 23    CODEBLOCK -> STATEMENT semi
+Rule 24    IF -> if lparen BOOLEAN rparen CODEBLOCK
+Rule 25    IF -> if lparen BOOLEAN rparen CODEBLOCK else CODEBLOCK
+
+Terminals, with rules where they appear
+
+assignment           : 10 11
+constant_int         : 20
+else                 : 25
+error                : 
+greater_than         : 19
+identifier           : 13
+if                   : 24 25
+lcurbrace            : 22
+lparen               : 24 25
+lshift               : 18
+rcurbrace            : 22
+return               : 9
+rparen               : 24 25
+semi                 : 2 3 23
+type_int             : 12
+
+Nonterminals, with rules where they appear
+
+ASSIGNMENT           : 7
+BOOLEAN              : 24 25
+CODEBLOCK            : 24 25 25
+CONSTANT             : 14
+DECL                 : 6
+EXPRESSION           : 5 9 10 11 18 18 19 19 21
+IF                   : 4
+OPERATION            : 16
+OPERATION_BINARY     : 17
+RETURN               : 8
+START                : 0
+STATEMENT            : 2 3 23
+STATEMENTS           : 1 2 22
+TYPE                 : 10
+VARIABLE             : 10 11 15
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . START
+    (1) START -> . STATEMENTS
+    (2) STATEMENTS -> . STATEMENT semi STATEMENTS
+    (3) STATEMENTS -> . STATEMENT semi
+    (4) STATEMENTS -> . IF
+    (5) STATEMENT -> . EXPRESSION
+    (6) STATEMENT -> . DECL
+    (7) STATEMENT -> . ASSIGNMENT
+    (8) STATEMENT -> . RETURN
+    (24) IF -> . if lparen BOOLEAN rparen CODEBLOCK
+    (25) IF -> . if lparen BOOLEAN rparen CODEBLOCK else CODEBLOCK
+    (14) EXPRESSION -> . CONSTANT
+    (15) EXPRESSION -> . VARIABLE
+    (16) EXPRESSION -> . OPERATION
+    (10) DECL -> . TYPE VARIABLE assignment EXPRESSION
+    (11) ASSIGNMENT -> . VARIABLE assignment EXPRESSION
+    (9) RETURN -> . return EXPRESSION
+    (20) CONSTANT -> . constant_int
+    (13) VARIABLE -> . identifier
+    (17) OPERATION -> . OPERATION_BINARY
+    (12) TYPE -> . type_int
+    (18) OPERATION_BINARY -> . EXPRESSION lshift EXPRESSION
+    (19) OPERATION_BINARY -> . EXPRESSION greater_than EXPRESSION
+
+    if              shift and go to state 7
+    return          shift and go to state 10
+    constant_int    shift and go to state 11
+    identifier      shift and go to state 17
+    type_int        shift and go to state 12
+
+    DECL                           shift and go to state 1
+    OPERATION_BINARY               shift and go to state 2
+    STATEMENTS                     shift and go to state 3
+    TYPE                           shift and go to state 18
+    ASSIGNMENT                     shift and go to state 5
+    START                          shift and go to state 13
+    CONSTANT                       shift and go to state 6
+    STATEMENT                      shift and go to state 4
+    VARIABLE                       shift and go to state 14
+    RETURN                         shift and go to state 16
+    OPERATION                      shift and go to state 8
+    EXPRESSION                     shift and go to state 9
+    IF                             shift and go to state 15
+
+state 1
+
+    (6) STATEMENT -> DECL .
+
+    semi            reduce using rule 6 (STATEMENT -> DECL .)
+
+
+state 2
+
+    (17) OPERATION -> OPERATION_BINARY .
+
+    lshift          reduce using rule 17 (OPERATION -> OPERATION_BINARY .)
+    greater_than    reduce using rule 17 (OPERATION -> OPERATION_BINARY .)
+    semi            reduce using rule 17 (OPERATION -> OPERATION_BINARY .)
+    rparen          reduce using rule 17 (OPERATION -> OPERATION_BINARY .)
+
+
+state 3
+
+    (1) START -> STATEMENTS .
+
+    $end            reduce using rule 1 (START -> STATEMENTS .)
+
+
+state 4
+
+    (2) STATEMENTS -> STATEMENT . semi STATEMENTS
+    (3) STATEMENTS -> STATEMENT . semi
+
+    semi            shift and go to state 19
+
+
+state 5
+
+    (7) STATEMENT -> ASSIGNMENT .
+
+    semi            reduce using rule 7 (STATEMENT -> ASSIGNMENT .)
+
+
+state 6
+
+    (14) EXPRESSION -> CONSTANT .
+
+    lshift          reduce using rule 14 (EXPRESSION -> CONSTANT .)
+    greater_than    reduce using rule 14 (EXPRESSION -> CONSTANT .)
+    semi            reduce using rule 14 (EXPRESSION -> CONSTANT .)
+    rparen          reduce using rule 14 (EXPRESSION -> CONSTANT .)
+
+
+state 7
+
+    (24) IF -> if . lparen BOOLEAN rparen CODEBLOCK
+    (25) IF -> if . lparen BOOLEAN rparen CODEBLOCK else CODEBLOCK
+
+    lparen          shift and go to state 20
+
+
+state 8
+
+    (16) EXPRESSION -> OPERATION .
+
+    lshift          reduce using rule 16 (EXPRESSION -> OPERATION .)
+    greater_than    reduce using rule 16 (EXPRESSION -> OPERATION .)
+    semi            reduce using rule 16 (EXPRESSION -> OPERATION .)
+    rparen          reduce using rule 16 (EXPRESSION -> OPERATION .)
+
+
+state 9
+
+    (5) STATEMENT -> EXPRESSION .
+    (18) OPERATION_BINARY -> EXPRESSION . lshift EXPRESSION
+    (19) OPERATION_BINARY -> EXPRESSION . greater_than EXPRESSION
+
+    semi            reduce using rule 5 (STATEMENT -> EXPRESSION .)
+    lshift          shift and go to state 22
+    greater_than    shift and go to state 21
+
+
+state 10
+
+    (9) RETURN -> return . EXPRESSION
+    (14) EXPRESSION -> . CONSTANT
+    (15) EXPRESSION -> . VARIABLE
+    (16) EXPRESSION -> . OPERATION
+    (20) CONSTANT -> . constant_int
+    (13) VARIABLE -> . identifier
+    (17) OPERATION -> . OPERATION_BINARY
+    (18) OPERATION_BINARY -> . EXPRESSION lshift EXPRESSION
+    (19) OPERATION_BINARY -> . EXPRESSION greater_than EXPRESSION
+
+    constant_int    shift and go to state 11
+    identifier      shift and go to state 17
+
+    VARIABLE                       shift and go to state 23
+    CONSTANT                       shift and go to state 6
+    OPERATION                      shift and go to state 8
+    EXPRESSION                     shift and go to state 24
+    OPERATION_BINARY               shift and go to state 2
+
+state 11
+
+    (20) CONSTANT -> constant_int .
+
+    lshift          reduce using rule 20 (CONSTANT -> constant_int .)
+    greater_than    reduce using rule 20 (CONSTANT -> constant_int .)
+    semi            reduce using rule 20 (CONSTANT -> constant_int .)
+    rparen          reduce using rule 20 (CONSTANT -> constant_int .)
+
+
+state 12
+
+    (12) TYPE -> type_int .
+
+    identifier      reduce using rule 12 (TYPE -> type_int .)
+
+
+state 13
+
+    (0) S' -> START .
+
+
+
+state 14
+
+    (15) EXPRESSION -> VARIABLE .
+    (11) ASSIGNMENT -> VARIABLE . assignment EXPRESSION
+
+    lshift          reduce using rule 15 (EXPRESSION -> VARIABLE .)
+    greater_than    reduce using rule 15 (EXPRESSION -> VARIABLE .)
+    semi            reduce using rule 15 (EXPRESSION -> VARIABLE .)
+    assignment      shift and go to state 25
+
+
+state 15
+
+    (4) STATEMENTS -> IF .
+
+    rcurbrace       reduce using rule 4 (STATEMENTS -> IF .)
+    $end            reduce using rule 4 (STATEMENTS -> IF .)
+
+
+state 16
+
+    (8) STATEMENT -> RETURN .
+
+    semi            reduce using rule 8 (STATEMENT -> RETURN .)
+
+
+state 17
+
+    (13) VARIABLE -> identifier .
+
+    lshift          reduce using rule 13 (VARIABLE -> identifier .)
+    greater_than    reduce using rule 13 (VARIABLE -> identifier .)
+    semi            reduce using rule 13 (VARIABLE -> identifier .)
+    rparen          reduce using rule 13 (VARIABLE -> identifier .)
+    assignment      reduce using rule 13 (VARIABLE -> identifier .)
+
+
+state 18
+
+    (10) DECL -> TYPE . VARIABLE assignment EXPRESSION
+    (13) VARIABLE -> . identifier
+
+    identifier      shift and go to state 17
+
+    VARIABLE                       shift and go to state 26
+
+state 19
+
+    (2) STATEMENTS -> STATEMENT semi . STATEMENTS
+    (3) STATEMENTS -> STATEMENT semi .
+    (2) STATEMENTS -> . STATEMENT semi STATEMENTS
+    (3) STATEMENTS -> . STATEMENT semi
+    (4) STATEMENTS -> . IF
+    (5) STATEMENT -> . EXPRESSION
+    (6) STATEMENT -> . DECL
+    (7) STATEMENT -> . ASSIGNMENT
+    (8) STATEMENT -> . RETURN
+    (24) IF -> . if lparen BOOLEAN rparen CODEBLOCK
+    (25) IF -> . if lparen BOOLEAN rparen CODEBLOCK else CODEBLOCK
+    (14) EXPRESSION -> . CONSTANT
+    (15) EXPRESSION -> . VARIABLE
+    (16) EXPRESSION -> . OPERATION
+    (10) DECL -> . TYPE VARIABLE assignment EXPRESSION
+    (11) ASSIGNMENT -> . VARIABLE assignment EXPRESSION
+    (9) RETURN -> . return EXPRESSION
+    (20) CONSTANT -> . constant_int
+    (13) VARIABLE -> . identifier
+    (17) OPERATION -> . OPERATION_BINARY
+    (12) TYPE -> . type_int
+    (18) OPERATION_BINARY -> . EXPRESSION lshift EXPRESSION
+    (19) OPERATION_BINARY -> . EXPRESSION greater_than EXPRESSION
+
+    rcurbrace       reduce using rule 3 (STATEMENTS -> STATEMENT semi .)
+    $end            reduce using rule 3 (STATEMENTS -> STATEMENT semi .)
+    if              shift and go to state 7
+    return          shift and go to state 10
+    constant_int    shift and go to state 11
+    identifier      shift and go to state 17
+    type_int        shift and go to state 12
+
+    DECL                           shift and go to state 1
+    OPERATION_BINARY               shift and go to state 2
+    STATEMENTS                     shift and go to state 27
+    TYPE                           shift and go to state 18
+    ASSIGNMENT                     shift and go to state 5
+    CONSTANT                       shift and go to state 6
+    STATEMENT                      shift and go to state 4
+    VARIABLE                       shift and go to state 14
+    RETURN                         shift and go to state 16
+    OPERATION                      shift and go to state 8
+    EXPRESSION                     shift and go to state 9
+    IF                             shift and go to state 15
+
+state 20
+
+    (24) IF -> if lparen . BOOLEAN rparen CODEBLOCK
+    (25) IF -> if lparen . BOOLEAN rparen CODEBLOCK else CODEBLOCK
+    (21) BOOLEAN -> . EXPRESSION
+    (14) EXPRESSION -> . CONSTANT
+    (15) EXPRESSION -> . VARIABLE
+    (16) EXPRESSION -> . OPERATION
+    (20) CONSTANT -> . constant_int
+    (13) VARIABLE -> . identifier
+    (17) OPERATION -> . OPERATION_BINARY
+    (18) OPERATION_BINARY -> . EXPRESSION lshift EXPRESSION
+    (19) OPERATION_BINARY -> . EXPRESSION greater_than EXPRESSION
+
+    constant_int    shift and go to state 11
+    identifier      shift and go to state 17
+
+    OPERATION_BINARY               shift and go to state 2
+    CONSTANT                       shift and go to state 6
+    BOOLEAN                        shift and go to state 28
+    VARIABLE                       shift and go to state 23
+    OPERATION                      shift and go to state 8
+    EXPRESSION                     shift and go to state 29
+
+state 21
+
+    (19) OPERATION_BINARY -> EXPRESSION greater_than . EXPRESSION
+    (14) EXPRESSION -> . CONSTANT
+    (15) EXPRESSION -> . VARIABLE
+    (16) EXPRESSION -> . OPERATION
+    (20) CONSTANT -> . constant_int
+    (13) VARIABLE -> . identifier
+    (17) OPERATION -> . OPERATION_BINARY
+    (18) OPERATION_BINARY -> . EXPRESSION lshift EXPRESSION
+    (19) OPERATION_BINARY -> . EXPRESSION greater_than EXPRESSION
+
+    constant_int    shift and go to state 11
+    identifier      shift and go to state 17
+
+    VARIABLE                       shift and go to state 23
+    CONSTANT                       shift and go to state 6
+    OPERATION                      shift and go to state 8
+    EXPRESSION                     shift and go to state 30
+    OPERATION_BINARY               shift and go to state 2
+
+state 22
+
+    (18) OPERATION_BINARY -> EXPRESSION lshift . EXPRESSION
+    (14) EXPRESSION -> . CONSTANT
+    (15) EXPRESSION -> . VARIABLE
+    (16) EXPRESSION -> . OPERATION
+    (20) CONSTANT -> . constant_int
+    (13) VARIABLE -> . identifier
+    (17) OPERATION -> . OPERATION_BINARY
+    (18) OPERATION_BINARY -> . EXPRESSION lshift EXPRESSION
+    (19) OPERATION_BINARY -> . EXPRESSION greater_than EXPRESSION
+
+    constant_int    shift and go to state 11
+    identifier      shift and go to state 17
+
+    VARIABLE                       shift and go to state 23
+    CONSTANT                       shift and go to state 6
+    OPERATION                      shift and go to state 8
+    EXPRESSION                     shift and go to state 31
+    OPERATION_BINARY               shift and go to state 2
+
+state 23
+
+    (15) EXPRESSION -> VARIABLE .
+
+    lshift          reduce using rule 15 (EXPRESSION -> VARIABLE .)
+    greater_than    reduce using rule 15 (EXPRESSION -> VARIABLE .)
+    semi            reduce using rule 15 (EXPRESSION -> VARIABLE .)
+    rparen          reduce using rule 15 (EXPRESSION -> VARIABLE .)
+
+
+state 24
+
+    (9) RETURN -> return EXPRESSION .
+    (18) OPERATION_BINARY -> EXPRESSION . lshift EXPRESSION
+    (19) OPERATION_BINARY -> EXPRESSION . greater_than EXPRESSION
+
+    semi            reduce using rule 9 (RETURN -> return EXPRESSION .)
+    lshift          shift and go to state 22
+    greater_than    shift and go to state 21
+
+
+state 25
+
+    (11) ASSIGNMENT -> VARIABLE assignment . EXPRESSION
+    (14) EXPRESSION -> . CONSTANT
+    (15) EXPRESSION -> . VARIABLE
+    (16) EXPRESSION -> . OPERATION
+    (20) CONSTANT -> . constant_int
+    (13) VARIABLE -> . identifier
+    (17) OPERATION -> . OPERATION_BINARY
+    (18) OPERATION_BINARY -> . EXPRESSION lshift EXPRESSION
+    (19) OPERATION_BINARY -> . EXPRESSION greater_than EXPRESSION
+
+    constant_int    shift and go to state 11
+    identifier      shift and go to state 17
+
+    VARIABLE                       shift and go to state 23
+    CONSTANT                       shift and go to state 6
+    OPERATION                      shift and go to state 8
+    EXPRESSION                     shift and go to state 32
+    OPERATION_BINARY               shift and go to state 2
+
+state 26
+
+    (10) DECL -> TYPE VARIABLE . assignment EXPRESSION
+
+    assignment      shift and go to state 33
+
+
+state 27
+
+    (2) STATEMENTS -> STATEMENT semi STATEMENTS .
+
+    rcurbrace       reduce using rule 2 (STATEMENTS -> STATEMENT semi STATEMENTS .)
+    $end            reduce using rule 2 (STATEMENTS -> STATEMENT semi STATEMENTS .)
+
+
+state 28
+
+    (24) IF -> if lparen BOOLEAN . rparen CODEBLOCK
+    (25) IF -> if lparen BOOLEAN . rparen CODEBLOCK else CODEBLOCK
+
+    rparen          shift and go to state 34
+
+
+state 29
+
+    (21) BOOLEAN -> EXPRESSION .
+    (18) OPERATION_BINARY -> EXPRESSION . lshift EXPRESSION
+    (19) OPERATION_BINARY -> EXPRESSION . greater_than EXPRESSION
+
+    rparen          reduce using rule 21 (BOOLEAN -> EXPRESSION .)
+    lshift          shift and go to state 22
+    greater_than    shift and go to state 21
+
+
+state 30
+
+    (19) OPERATION_BINARY -> EXPRESSION greater_than EXPRESSION .
+    (18) OPERATION_BINARY -> EXPRESSION . lshift EXPRESSION
+    (19) OPERATION_BINARY -> EXPRESSION . greater_than EXPRESSION
+
+  ! shift/reduce conflict for lshift resolved as shift
+  ! shift/reduce conflict for greater_than resolved as shift
+    semi            reduce using rule 19 (OPERATION_BINARY -> EXPRESSION greater_than EXPRESSION .)
+    rparen          reduce using rule 19 (OPERATION_BINARY -> EXPRESSION greater_than EXPRESSION .)
+    lshift          shift and go to state 22
+    greater_than    shift and go to state 21
+
+  ! lshift          [ reduce using rule 19 (OPERATION_BINARY -> EXPRESSION greater_than EXPRESSION .) ]
+  ! greater_than    [ reduce using rule 19 (OPERATION_BINARY -> EXPRESSION greater_than EXPRESSION .) ]
+
+
+state 31
+
+    (18) OPERATION_BINARY -> EXPRESSION lshift EXPRESSION .
+    (18) OPERATION_BINARY -> EXPRESSION . lshift EXPRESSION
+    (19) OPERATION_BINARY -> EXPRESSION . greater_than EXPRESSION
+
+  ! shift/reduce conflict for lshift resolved as shift
+  ! shift/reduce conflict for greater_than resolved as shift
+    semi            reduce using rule 18 (OPERATION_BINARY -> EXPRESSION lshift EXPRESSION .)
+    rparen          reduce using rule 18 (OPERATION_BINARY -> EXPRESSION lshift EXPRESSION .)
+    lshift          shift and go to state 22
+    greater_than    shift and go to state 21
+
+  ! lshift          [ reduce using rule 18 (OPERATION_BINARY -> EXPRESSION lshift EXPRESSION .) ]
+  ! greater_than    [ reduce using rule 18 (OPERATION_BINARY -> EXPRESSION lshift EXPRESSION .) ]
+
+
+state 32
+
+    (11) ASSIGNMENT -> VARIABLE assignment EXPRESSION .
+    (18) OPERATION_BINARY -> EXPRESSION . lshift EXPRESSION
+    (19) OPERATION_BINARY -> EXPRESSION . greater_than EXPRESSION
+
+    semi            reduce using rule 11 (ASSIGNMENT -> VARIABLE assignment EXPRESSION .)
+    lshift          shift and go to state 22
+    greater_than    shift and go to state 21
+
+
+state 33
+
+    (10) DECL -> TYPE VARIABLE assignment . EXPRESSION
+    (14) EXPRESSION -> . CONSTANT
+    (15) EXPRESSION -> . VARIABLE
+    (16) EXPRESSION -> . OPERATION
+    (20) CONSTANT -> . constant_int
+    (13) VARIABLE -> . identifier
+    (17) OPERATION -> . OPERATION_BINARY
+    (18) OPERATION_BINARY -> . EXPRESSION lshift EXPRESSION
+    (19) OPERATION_BINARY -> . EXPRESSION greater_than EXPRESSION
+
+    constant_int    shift and go to state 11
+    identifier      shift and go to state 17
+
+    OPERATION_BINARY               shift and go to state 2
+    CONSTANT                       shift and go to state 6
+    VARIABLE                       shift and go to state 23
+    OPERATION                      shift and go to state 8
+    EXPRESSION                     shift and go to state 35
+
+state 34
+
+    (24) IF -> if lparen BOOLEAN rparen . CODEBLOCK
+    (25) IF -> if lparen BOOLEAN rparen . CODEBLOCK else CODEBLOCK
+    (22) CODEBLOCK -> . lcurbrace STATEMENTS rcurbrace
+    (23) CODEBLOCK -> . STATEMENT semi
+    (5) STATEMENT -> . EXPRESSION
+    (6) STATEMENT -> . DECL
+    (7) STATEMENT -> . ASSIGNMENT
+    (8) STATEMENT -> . RETURN
+    (14) EXPRESSION -> . CONSTANT
+    (15) EXPRESSION -> . VARIABLE
+    (16) EXPRESSION -> . OPERATION
+    (10) DECL -> . TYPE VARIABLE assignment EXPRESSION
+    (11) ASSIGNMENT -> . VARIABLE assignment EXPRESSION
+    (9) RETURN -> . return EXPRESSION
+    (20) CONSTANT -> . constant_int
+    (13) VARIABLE -> . identifier
+    (17) OPERATION -> . OPERATION_BINARY
+    (12) TYPE -> . type_int
+    (18) OPERATION_BINARY -> . EXPRESSION lshift EXPRESSION
+    (19) OPERATION_BINARY -> . EXPRESSION greater_than EXPRESSION
+
+    lcurbrace       shift and go to state 37
+    return          shift and go to state 10
+    constant_int    shift and go to state 11
+    identifier      shift and go to state 17
+    type_int        shift and go to state 12
+
+    DECL                           shift and go to state 1
+    OPERATION_BINARY               shift and go to state 2
+    TYPE                           shift and go to state 18
+    ASSIGNMENT                     shift and go to state 5
+    CONSTANT                       shift and go to state 6
+    STATEMENT                      shift and go to state 38
+    VARIABLE                       shift and go to state 14
+    RETURN                         shift and go to state 16
+    OPERATION                      shift and go to state 8
+    EXPRESSION                     shift and go to state 9
+    CODEBLOCK                      shift and go to state 36
+
+state 35
+
+    (10) DECL -> TYPE VARIABLE assignment EXPRESSION .
+    (18) OPERATION_BINARY -> EXPRESSION . lshift EXPRESSION
+    (19) OPERATION_BINARY -> EXPRESSION . greater_than EXPRESSION
+
+    semi            reduce using rule 10 (DECL -> TYPE VARIABLE assignment EXPRESSION .)
+    lshift          shift and go to state 22
+    greater_than    shift and go to state 21
+
+
+state 36
+
+    (24) IF -> if lparen BOOLEAN rparen CODEBLOCK .
+    (25) IF -> if lparen BOOLEAN rparen CODEBLOCK . else CODEBLOCK
+
+    $end            reduce using rule 24 (IF -> if lparen BOOLEAN rparen CODEBLOCK .)
+    rcurbrace       reduce using rule 24 (IF -> if lparen BOOLEAN rparen CODEBLOCK .)
+    else            shift and go to state 39
+
+
+state 37
+
+    (22) CODEBLOCK -> lcurbrace . STATEMENTS rcurbrace
+    (2) STATEMENTS -> . STATEMENT semi STATEMENTS
+    (3) STATEMENTS -> . STATEMENT semi
+    (4) STATEMENTS -> . IF
+    (5) STATEMENT -> . EXPRESSION
+    (6) STATEMENT -> . DECL
+    (7) STATEMENT -> . ASSIGNMENT
+    (8) STATEMENT -> . RETURN
+    (24) IF -> . if lparen BOOLEAN rparen CODEBLOCK
+    (25) IF -> . if lparen BOOLEAN rparen CODEBLOCK else CODEBLOCK
+    (14) EXPRESSION -> . CONSTANT
+    (15) EXPRESSION -> . VARIABLE
+    (16) EXPRESSION -> . OPERATION
+    (10) DECL -> . TYPE VARIABLE assignment EXPRESSION
+    (11) ASSIGNMENT -> . VARIABLE assignment EXPRESSION
+    (9) RETURN -> . return EXPRESSION
+    (20) CONSTANT -> . constant_int
+    (13) VARIABLE -> . identifier
+    (17) OPERATION -> . OPERATION_BINARY
+    (12) TYPE -> . type_int
+    (18) OPERATION_BINARY -> . EXPRESSION lshift EXPRESSION
+    (19) OPERATION_BINARY -> . EXPRESSION greater_than EXPRESSION
+
+    if              shift and go to state 7
+    return          shift and go to state 10
+    constant_int    shift and go to state 11
+    identifier      shift and go to state 17
+    type_int        shift and go to state 12
+
+    DECL                           shift and go to state 1
+    OPERATION_BINARY               shift and go to state 2
+    STATEMENTS                     shift and go to state 40
+    TYPE                           shift and go to state 18
+    ASSIGNMENT                     shift and go to state 5
+    CONSTANT                       shift and go to state 6
+    STATEMENT                      shift and go to state 4
+    VARIABLE                       shift and go to state 14
+    RETURN                         shift and go to state 16
+    OPERATION                      shift and go to state 8
+    EXPRESSION                     shift and go to state 9
+    IF                             shift and go to state 15
+
+state 38
+
+    (23) CODEBLOCK -> STATEMENT . semi
+
+    semi            shift and go to state 41
+
+
+state 39
+
+    (25) IF -> if lparen BOOLEAN rparen CODEBLOCK else . CODEBLOCK
+    (22) CODEBLOCK -> . lcurbrace STATEMENTS rcurbrace
+    (23) CODEBLOCK -> . STATEMENT semi
+    (5) STATEMENT -> . EXPRESSION
+    (6) STATEMENT -> . DECL
+    (7) STATEMENT -> . ASSIGNMENT
+    (8) STATEMENT -> . RETURN
+    (14) EXPRESSION -> . CONSTANT
+    (15) EXPRESSION -> . VARIABLE
+    (16) EXPRESSION -> . OPERATION
+    (10) DECL -> . TYPE VARIABLE assignment EXPRESSION
+    (11) ASSIGNMENT -> . VARIABLE assignment EXPRESSION
+    (9) RETURN -> . return EXPRESSION
+    (20) CONSTANT -> . constant_int
+    (13) VARIABLE -> . identifier
+    (17) OPERATION -> . OPERATION_BINARY
+    (12) TYPE -> . type_int
+    (18) OPERATION_BINARY -> . EXPRESSION lshift EXPRESSION
+    (19) OPERATION_BINARY -> . EXPRESSION greater_than EXPRESSION
+
+    lcurbrace       shift and go to state 37
+    return          shift and go to state 10
+    constant_int    shift and go to state 11
+    identifier      shift and go to state 17
+    type_int        shift and go to state 12
+
+    DECL                           shift and go to state 1
+    OPERATION_BINARY               shift and go to state 2
+    TYPE                           shift and go to state 18
+    ASSIGNMENT                     shift and go to state 5
+    CONSTANT                       shift and go to state 6
+    STATEMENT                      shift and go to state 38
+    VARIABLE                       shift and go to state 14
+    RETURN                         shift and go to state 16
+    OPERATION                      shift and go to state 8
+    EXPRESSION                     shift and go to state 9
+    CODEBLOCK                      shift and go to state 42
+
+state 40
+
+    (22) CODEBLOCK -> lcurbrace STATEMENTS . rcurbrace
+
+    rcurbrace       shift and go to state 43
+
+
+state 41
+
+    (23) CODEBLOCK -> STATEMENT semi .
+
+    else            reduce using rule 23 (CODEBLOCK -> STATEMENT semi .)
+    $end            reduce using rule 23 (CODEBLOCK -> STATEMENT semi .)
+    rcurbrace       reduce using rule 23 (CODEBLOCK -> STATEMENT semi .)
+
+
+state 42
+
+    (25) IF -> if lparen BOOLEAN rparen CODEBLOCK else CODEBLOCK .
+
+    $end            reduce using rule 25 (IF -> if lparen BOOLEAN rparen CODEBLOCK else CODEBLOCK .)
+    rcurbrace       reduce using rule 25 (IF -> if lparen BOOLEAN rparen CODEBLOCK else CODEBLOCK .)
+
+
+state 43
+
+    (22) CODEBLOCK -> lcurbrace STATEMENTS rcurbrace .
+
+    else            reduce using rule 22 (CODEBLOCK -> lcurbrace STATEMENTS rcurbrace .)
+    $end            reduce using rule 22 (CODEBLOCK -> lcurbrace STATEMENTS rcurbrace .)
+    rcurbrace       reduce using rule 22 (CODEBLOCK -> lcurbrace STATEMENTS rcurbrace .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for lshift in state 30 resolved as shift
+WARNING: shift/reduce conflict for greater_than in state 30 resolved as shift
+WARNING: shift/reduce conflict for lshift in state 31 resolved as shift
+WARNING: shift/reduce conflict for greater_than in state 31 resolved as shift
