@@ -24,6 +24,13 @@ class Node:
     def getData(self):
         return self.data
 
+    def getNames(self):
+        temp = self.name + " " + self.data + "\n"
+        for child in self.children:
+            temp += child.getNames()
+
+        return temp
+
     def getChildren(self):
         temp = ""
         for child in self.children:
