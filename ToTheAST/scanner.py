@@ -12,9 +12,9 @@
 # }
 # 
 # return z;
-import sys
 
 import fileinput
+import sys
 
 import ply.lex as lex
 import ply.yacc as yacc
@@ -29,7 +29,6 @@ reserved = {'int' : 'int',
         }
 
 tokens = [
-        'comment',
         'assign',
         'semi', 
         'comma',
@@ -76,7 +75,7 @@ def t_int_value(t):
     t.value = int(t.value)
     return t
 
-def t_comment(t):
+def t_ignore_comment(t):
     r'//.*\n'
     t.lexer.lineno += 1
     pass
