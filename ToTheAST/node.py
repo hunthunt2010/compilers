@@ -33,7 +33,11 @@ class Node:
         return temp
 
     def getChildren(self):
-        temp = ""
+        if len(self.children) == 0:
+            return ""
+
+
+        temp = str(self.name) + " "
         for child in self.children:
             if child is not None:
                 temp += str(child.getName()) + " "
