@@ -12,6 +12,7 @@
 # }
 # 
 # return z;
+import sys
 
 import ply.lex as lex
 import ply.yacc as yacc
@@ -55,7 +56,7 @@ t_minus = r'-'
 t_multiply = r'\*'
 t_divide = r'/'
 t_semi = r';'
-t_ignore = " \t\n"
+t_ignore = " \t"
 
 def t_identifier(t):
     r'[a-zA-Z_]+[a-zA-Z0-9_]*'
@@ -64,8 +65,8 @@ def t_identifier(t):
     return t
 
 def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
+    r'\n'
+    t.lexer.lineno += 1
 
 def t_int_value(t):
     r'[0-9][0-9]*'
@@ -78,7 +79,7 @@ def t_comment(t):
 
 def t_error(t):
     print("Illegal character :" + str(t.value))
-    t.lexer.skip(1)
+    sys.exit(1)
 
 def p_START(p):
     '''START : STMTS'''
@@ -222,7 +223,8 @@ def p_MODIFIER(p):
     p[0] = Node("MODIFIER","const")
 
 def p_error(p):
-    print("yacc error: %s" % p)
+    print("Unknown Token(%s): %s" % (str(p.lineno -13), p.value))
+    sys.exit(2)
 
 lex.lex()
 parser = yacc.yacc()
