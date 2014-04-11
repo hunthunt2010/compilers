@@ -69,6 +69,7 @@ def t_identifier(t):
 def t_newline(t):
     r'\n'
     t.lexer.lineno += 1
+    pass
 
 def t_int_value(t):
     r'[0-9][0-9]*'
@@ -77,10 +78,10 @@ def t_int_value(t):
 
 def t_comment(t):
     r'//.*$'
-    return
+    pass
 
 def t_error(t):
-    sys.stderr.write("Illegal character: %s\n" % str(t.value))
+    sys.stderr.write("Illegal character line %s\n" % (str(t.lineno)))
     sys.exit(1)
 
 def p_START(p):
@@ -225,7 +226,7 @@ def p_MODIFIER(p):
     p[0] = Node("MODIFIER","const")
 
 def p_error(p):
-    sys.stderr.write("Unknown Token(%s): %s\n" % (str(p.lineno -13), p.value))
+    sys.stderr.write("Unknown Token(%s): %s\n" % (str(p.lineno), p.value))
     sys.exit(2)
 
 lex.lex()
@@ -235,12 +236,6 @@ parser = yacc.yacc()
 s = ""
 for line in fileinput.input():
     s += line
-
-lex.input(s)
-while True:
-    tok = lex.token()
-    if not tok: break
-    print(tok)
 
 root = parser.parse(s)
 
