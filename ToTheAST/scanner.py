@@ -28,23 +28,27 @@ reserved = {'int' : 'int',
 tokens = [
         'assign',
         'semi', 
+        'comma',
         'lp', 'rp',
         'lb', 'rb',
         'leftshift',
         'plus',
         'minus',
         'multiply',
+        'lessequal',
         'divide',
         'int_value',
         'identifier',
     ] + list(reserved.values())
 
 t_assign = r'='
+t_comma = r','
 t_lp = r'\('
 t_rp = r'\)'
 t_lb = r'{'
 t_rb = r'}'
 t_leftshift = r'<<'
+t_lessequal = r'<='
 t_plus = r'\+'
 t_minus = r'-'
 t_multiply = r'\*'
@@ -59,7 +63,7 @@ def t_identifier(t):
     return t
 
 def t_int_value(t):
-    r'[1-9][0-9]+'
+    r'[0-9][0-9]*'
     return int(t.value)
 
 def t_error(t):
@@ -95,10 +99,19 @@ def p_IF_ELSE_STMT(p):
     'STMT : if lp EXPR rp CODEBLOCK else CODEBLOCK'
 
 def p_DECL(p):
-    '''DECL : TYPE VARIABLE'''
+    '''DECL : TYPE VARIABLE MULTI'''
 
 def p_DECL_ASSIGN(p):
-    '''DECL : TYPE VARIABLE assign EXPR'''
+    '''DECL : TYPE VARIABLE assign EXPR MULTI'''
+    
+def p_MULTI(p):
+    '''MULTI : comma VARIABLE'''
+
+def p_MULTI_ASSIGN(p):
+    '''MULTI : comma VARIABLE assign EXPR'''
+
+def p_MULTI_LAMBDA(p):
+    '''MULTI : '''
 
 def p_VARIABLE(p):
     '''VARIABLE : identifier'''
@@ -118,7 +131,8 @@ def p_BINARYOPERATOR(p):
                       | plus
                       | minus
                       | multiply
-                      | divide'''
+                      | divide
+                      | lessequal'''
     p[0] = ('BINARYOPERATOR', p[1])
 
 def p_RETURN(p):
@@ -141,7 +155,7 @@ def p_TYPE(p):
 def p_TYPE_INT(p):
     '''TYPE : int'''
     p[0] = ('TYPE', p[1])
-
+                          
 def p_MODIFIER(p):
     'MODIFIER : const'
     p[0] = ('MODIFIER', p[1])
@@ -154,11 +168,11 @@ parser = yacc.yacc()
 
 while True:
     try:
-        s = input('Validate String > ')
+        s = input()
     except EOFError:
         break
-    if s == 'quit':
-        break
+    #if s == 'quit':
+    #    break
     lex.input(s)
     while True:
         tok = lex.token()
