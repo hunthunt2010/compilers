@@ -25,19 +25,22 @@ class Node:
         return self.data
 
     def getNames(self):
-        temp = self.name + " " + self.data + "\n"
+        temp = "%s %s\n" % (self.name, self.data)
         for child in self.children:
-            temp += child.getNames()
+            if child is not None:
+                temp += child.getNames()
 
         return temp
 
     def getChildren(self):
         temp = ""
         for child in self.children:
-            temp += child.getName() + " "
+            if child is not None:
+                temp += str(child.getName()) + " "
 
         temp += "\n"
         for child in self.children:
-            temp += child.getChildren()
+            if child is not None:
+                temp += child.getChildren()
 
         return temp
