@@ -80,7 +80,7 @@ def t_comment(t):
     return
 
 def t_error(t):
-    print("Illegal character :" + str(t.value))
+    sys.stderr.write("Illegal character: %s\n" % str(t.value))
     sys.exit(1)
 
 def p_START(p):
@@ -225,7 +225,7 @@ def p_MODIFIER(p):
     p[0] = Node("MODIFIER","const")
 
 def p_error(p):
-    print("Unknown Token(%s): %s" % (str(p.lineno -13), p.value))
+    sys.stderr.write("Unknown Token(%s): %s\n" % (str(p.lineno -13), p.value))
     sys.exit(2)
 
 lex.lex()
