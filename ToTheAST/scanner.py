@@ -29,10 +29,10 @@ reserved = {'int' : 'int',
         }
 
 tokens = [
+        'comment',
         'assign',
         'semi', 
         'comma',
-        'comment',
         'lp', 'rp',
         'lb', 'rb',
         'leftshift',
@@ -45,6 +45,9 @@ tokens = [
         'identifier',
     ] + list(reserved.values())
 
+def t_comment(t):
+    r'\/\/.*$'
+
 t_assign = r'='
 t_comma = r','
 t_lp = r'\('
@@ -56,9 +59,10 @@ t_lessequal = r'<='
 t_plus = r'\+'
 t_minus = r'-'
 t_multiply = r'\*'
-t_divide = r'/'
+t_divide = r'/[^/]'
 t_semi = r';'
 t_ignore = " \t"
+
 
 def t_identifier(t):
     r'[a-zA-Z_]+[a-zA-Z0-9_]*'
@@ -75,12 +79,8 @@ def t_int_value(t):
     t.value = int(t.value)
     return t
 
-def t_comment(t):
-    r'//.*$'
-    return
-
 def t_error(t):
-    sys.stderr.write("Illegal character: %s\n" % str(t.value))
+    sys.stderr.write("Illegal character (%d): %s\n" % (t.lineno, str(t.value)))
     sys.exit(1)
 
 def p_START(p):
@@ -96,6 +96,9 @@ def p_STMTS(p):
 
 def p_EMPTY_STMTS(p):
     'STMTS :'
+
+def p_STMT_COMMENT(p):
+    'STMT : comment'
 
 def p_STMT_DECL(p):
     '''STMT : DECL semi'''
@@ -225,7 +228,7 @@ def p_MODIFIER(p):
     p[0] = Node("MODIFIER","const")
 
 def p_error(p):
-    sys.stderr.write("Unknown Token(%s): %s\n" % (str(p.lineno -13), p.value))
+    sys.stderr.write("Unknown Token(%d): %s\n" % (str(p.lineno -13), p.value))
     sys.exit(2)
 
 lex.lex()
