@@ -13,6 +13,8 @@
 # 
 # return z;
 
+import re
+
 import ply.lex as lex
 import ply.yacc as yacc
 
@@ -29,6 +31,7 @@ tokens = [
         'assign',
         'semi', 
         'comma',
+        'comment',
         'lp', 'rp',
         'lb', 'rb',
         'leftshift',
@@ -65,6 +68,10 @@ def t_identifier(t):
 def t_int_value(t):
     r'[0-9][0-9]*'
     return int(t.value)
+
+def t_comment(t):
+    r'//.*$'
+    return
 
 def t_error(t):
     print("Illegal character :" + str(t.value))
@@ -173,7 +180,6 @@ while True:
         break
     #if s == 'quit':
     #    break
-    re.sub(r'//.*$', '', s)
     lex.input(s)
     while True:
         tok = lex.token()
