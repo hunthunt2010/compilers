@@ -13,6 +13,8 @@
 # 
 # return z;
 
+import fileinput
+
 import ply.lex as lex
 import ply.yacc as yacc
 
@@ -228,7 +230,10 @@ lex.lex()
 parser = yacc.yacc()
 
 
-s = open("sample.txt", 'r').read()
+s = ""
+for line in fileinput.input():
+    s += line
+
 lex.input(s)
 while True:
     tok = lex.token()
