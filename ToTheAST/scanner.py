@@ -63,6 +63,10 @@ def t_identifier(t):
         t.type = reserved[ t.value ]
     return t
 
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
 def t_int_value(t):
     r'[0-9][0-9]*'
     t.value = int(t.value)
