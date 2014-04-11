@@ -56,10 +56,9 @@ t_lessequal = r'<='
 t_plus = r'\+'
 t_minus = r'-'
 t_multiply = r'\*'
-t_divide = r'/[^/]'
+t_divide = r'/'
 t_semi = r';'
 t_ignore = " \t"
-
 
 def t_identifier(t):
     r'[a-zA-Z_]+[a-zA-Z0-9_]*'
@@ -78,7 +77,9 @@ def t_int_value(t):
     return t
 
 def t_comment(t):
-    r'//.*$'
+    r'//.*\n'
+    t.lexer.lineno += 1
+    pass
 
 def t_error(t):
     sys.stderr.write("Illegal character (%d): %s\n" % (t.lineno))
@@ -97,9 +98,6 @@ def p_STMTS(p):
 
 def p_EMPTY_STMTS(p):
     'STMTS :'
-
-def p_STMT_COMMENT(p):
-    'STMT : comment'
 
 def p_STMT_DECL(p):
     '''STMT : DECL semi'''
