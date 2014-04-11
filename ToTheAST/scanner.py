@@ -105,6 +105,7 @@ def p_STMT_RETURN(p):
 def p_STMT_ASSIGN(p):
     'STMT : identifier assign EXPR semi'
     p[0] = Node("ASSIGN", "ASSIGN")
+    p[0].addChild(Node("IDENIFIER", p[1]))
     p[0].addChild(p[3])
 
 def p_IF_STMT(p):
