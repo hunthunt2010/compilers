@@ -173,6 +173,7 @@ while True:
         break
     #if s == 'quit':
     #    break
+    re.sub(r'//.*$', '', s)
     lex.input(s)
     while True:
         tok = lex.token()
