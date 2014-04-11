@@ -10,14 +10,9 @@ reservedWords = {
 }
 
 tokens = [
-
+    "ID"
 
 ] + list(reservedWords.values())
-
-
-
-
-
 
 def t_ID(t):
     r'[A-Za-z_][A-Za-z0-9_]*'
