@@ -1,5 +1,5 @@
 import sys
-import Node as Node
+import node as Node
 
 reservedWords = {
     "if" : "IF",
@@ -31,6 +31,7 @@ lex.lex()
 import ply.yacc as yacc
 parser = yacc.yacc()
 
+if sys.argv[1] is None: sys.exit(1)
 fileName = sys.argv[1]
 
 fileData = open(fileName, 'r').read()
